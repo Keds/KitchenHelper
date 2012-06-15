@@ -422,7 +422,7 @@ const NSInteger kTotalQuantityButtons = 61;
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return NO; // (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+    return interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
 }
 
 @end
