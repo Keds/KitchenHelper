@@ -334,15 +334,13 @@ const NSInteger kTotalQuantityButtons = 61;
         self.convertedQuantityLabel.text = value;
     }
     NSString *secondQuantityInString;
-    if (secondQuantityInDigit < 0.001) {
-        secondQuantityInString = [NSString stringWithFormat:@"%.4f", secondQuantityInDigit];
-    } else if (secondQuantityInDigit < 0.01) {
-        secondQuantityInString = [NSString stringWithFormat:@"%.3f", secondQuantityInDigit];
-    } else {
-        secondQuantityInString = [NSString stringWithFormat:@"%.2f", secondQuantityInDigit];
+    secondQuantityInString = [NSString stringWithFormat:@"%.4f", secondQuantityInDigit];
+    if ([secondQuantityInString hasSuffix:@".0000"]) {
+        secondQuantityInString = [NSString stringWithFormat:@"%.0f", secondQuantityInString];
     }
     
-    self.unitFormulaLabel.text = [NSString stringWithFormat:@"1 %@ = %@ %@",  firstUnitLabel, secondQuantityInString, secondUnitLabel];
+    NSString *plural = (secondQuantityInDigit == 0 || secondQuantityInDigit == 1) ? @"" : @"s";
+    self.unitFormulaLabel.text = [NSString stringWithFormat:@"1 %@ = %@ %@%@",  firstUnitLabel, secondQuantityInString, secondUnitLabel, plural];
 }
 
 - (void)handleScrollingEnd:(UIScrollView *)scrollView
@@ -422,7 +420,7 @@ const NSInteger kTotalQuantityButtons = 61;
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
+    return NO; // interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
 }
 
 @end

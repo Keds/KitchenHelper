@@ -109,18 +109,6 @@
     <resources>
         <image name="Frame1.jpeg" width="259" height="194"/>
     </resources>
-    <classes>
-        <class className="ViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="convertedQuantityLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="menuFirstUnitScrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="menuSecondUnitScrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="quantityScrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="unitFormulaLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
