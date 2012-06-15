@@ -18,7 +18,14 @@
 #define GALLON @"Gallon"
 
 @interface ViewController ()
+
+@property (nonatomic, assign) float quantityInputOffset;
+@property (nonatomic, assign) float firstUnitOffset;
+@property (nonatomic, assign) float secondUnitOffset;
+@property (nonatomic, strong) NSMutableDictionary *conversionDictionary;
+
 - (NSString *)quantityLabel:(int)index;
+- (UIColor *)titleColor;
 @end
 
 @implementation ViewController
@@ -30,19 +37,17 @@
 @synthesize unitFormulaLabel;
 @synthesize unitButtonArray;
 @synthesize quantityButtonArray;
+@synthesize quantityInputOffset;
+@synthesize firstUnitOffset;
+@synthesize secondUnitOffset;
+@synthesize conversionDictionary;
+
 
 const CGFloat kButtonWidth = 50.0;
 const CGFloat kButtonHeight = 50.0;
 const CGFloat kScrollWidth = 300.0;
 const CGFloat kScrollHeight = 50.0;
 const NSInteger kTotalQuantityButtons = 61;
-
-
-float quantityInputOffset;
-float firstUnitOffset;
-float secondUnitOffset;
-NSMutableDictionary *data;
-
 
 - (NSMutableArray *)creatUnitArray
 {
@@ -71,9 +76,9 @@ NSMutableDictionary *data;
 }
 
 
-- (NSMutableDictionary *)conversionDataTable
+- (NSMutableDictionary *)buildConversionTable
 {
-    NSMutableDictionary *dataTable = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *conversionTable = [[NSMutableDictionary alloc] init];
     
     NSArray *mlArray = [NSArray arrayWithObjects:@"1", @"0.20", @"0.0676280454", @"0.0338140227", @"0.00425", @"0.002125", @"0.0010625", @"0.001", @"0.000265625", nil];
     NSArray *tspArray = [NSArray arrayWithObjects:@"5", @"1", @"0.3333333333", @"0.16907", @"0.0208333333", @"0.00211", @"0.0052083333", @"0.0049289216", @"0.0013020833", nil];
@@ -85,17 +90,17 @@ NSMutableDictionary *data;
     NSArray *literArray = [NSArray arrayWithObjects:@"1000", @"202.88414", @"67.628045", @"33.814023", @"4.2267528", @"2.1133764", @"1.0566882", @"1", @"0.26417205", nil];
     NSArray *gallonArray = [NSArray arrayWithObjects:@"3785.41178", @"768", @"256", @"128", @"16", @"8", @"4", @"3.7854118", @"1", nil];
     
-    [dataTable setObject:mlArray forKey:MILLILITER];
-    [dataTable setObject:tspArray forKey:TEASPOON];
-    [dataTable setObject:tbspArray forKey:TABLESPOON];
-    [dataTable setObject:ounceArray forKey:FLUID_OUNCE];
-    [dataTable setObject:cupArray forKey:CUP];
-    [dataTable setObject:pintArray forKey:PINT];
-    [dataTable setObject:quartArray forKey:QUART];
-    [dataTable setObject:literArray forKey:LITER];
-    [dataTable setObject:gallonArray forKey:GALLON];
+    [conversionTable setObject:mlArray forKey:MILLILITER];
+    [conversionTable setObject:tspArray forKey:TEASPOON];
+    [conversionTable setObject:tbspArray forKey:TABLESPOON];
+    [conversionTable setObject:ounceArray forKey:FLUID_OUNCE];
+    [conversionTable setObject:cupArray forKey:CUP];
+    [conversionTable setObject:pintArray forKey:PINT];
+    [conversionTable setObject:quartArray forKey:QUART];
+    [conversionTable setObject:literArray forKey:LITER];
+    [conversionTable setObject:gallonArray forKey:GALLON];
     
-    return dataTable;
+    return conversionTable;
 }
 
 - (NSMutableArray *)createQuantityButtonArray {
@@ -110,7 +115,7 @@ NSMutableDictionary *data;
         [btn setFrame:CGRectMake(0.0f, 0.0f, kButtonWidth, kButtonHeight)];
         
         [btn setTitle:[self quantityLabel:i] forState:UIControlStateNormal];
-        [btn setTitleColor:[UIColor colorWithRed:68.0/255.0 green:152.0/255.0 blue:180.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+        [btn setTitleColor:[self titleColor] forState:UIControlStateNormal];
         [btn.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:18.0]];
         btn.userInteractionEnabled = NO;
         
@@ -119,6 +124,9 @@ NSMutableDictionary *data;
     return quantityButtonArray;
 }
 
+- (UIColor *)titleColor {
+    return [UIColor colorWithRed:68.0/255.0 green:152.0/255.0 blue:180.0/255.0 alpha:1.0];
+}
 
 - (void)initializeQuantityScrollView {
     
@@ -133,7 +141,7 @@ NSMutableDictionary *data;
     
     [self createQuantityButtonArray];
     
-    float totalButtonWidth = 0; // (quantityScrollView.frame.size.width / 20);
+    float totalButtonWidth = 0;
     
     for (int i = 0; i < kTotalQuantityButtons; i++) 
     {
@@ -173,7 +181,7 @@ NSMutableDictionary *data;
         btnRect.origin.x = totalButtonWidth;
         [btn setFrame:btnRect];
         
-        [btn setTitleColor:[UIColor colorWithRed:68.0/255.0 green:152.0/255.0 blue:180.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+        [btn setTitleColor:[self titleColor] forState:UIControlStateNormal];
         [btn.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:15.0]];
 
         
@@ -188,17 +196,15 @@ NSMutableDictionary *data;
     [scrollView setContentSize:CGSizeMake((totalButtonWidth - (kButtonWidth * 2) + kScrollWidth), kScrollHeight)];
 }
 
-- (void)initializeMenuFirstUnitScrollView {
-    
+- (void)initializeMenuFirstUnitScrollView
+{
     [self createUnitScrollView:menuFirstUnitScrollView];
-    
 }
+
 
 - (void)initializeMenuSecondUnitScrollView 
 {
-    
     [self createUnitScrollView:menuSecondUnitScrollView];
-
 }
 
 
@@ -308,20 +314,16 @@ NSMutableDictionary *data;
     return label;
 }
 
-
-- (void)textUnitFormulaLabel:(float)quantityOffset firstUnitOffset:(float)firstUnitOffset secondUnitOffset:(float)secondUnitOffset
+- (void)setUnitFormulaLabelFromQuantityOffset:(float)quantityContentOffset firstUnitOffset:(float)firstUnitContentOffset secondUnitOffset:(float)secondUnitContentOffset
 {
-    float firstQuantityInDigit = [self convertInputNumber:quantityOffset];
+    float firstQuantityInDigit = [self convertInputNumber:quantityContentOffset];
     
-    NSString *firstUnitLabel = [self unitLabel:firstUnitOffset];
-    NSString *secondUnitLabel = [self unitLabel:secondUnitOffset];
+    NSString *firstUnitLabel = [self unitLabel:firstUnitContentOffset];
+    NSString *secondUnitLabel = [self unitLabel:secondUnitContentOffset];
     
-    NSInteger secondUnitIndex = secondUnitOffset/(2 * kButtonWidth);
-    float secondQuantityInDigit = [[[data objectForKey:firstUnitLabel] objectAtIndex:secondUnitIndex] floatValue];
+    NSInteger secondUnitIndex = secondUnitContentOffset/(2 * kButtonWidth);
+    float secondQuantityInDigit = [[[conversionDictionary objectForKey:firstUnitLabel] objectAtIndex:secondUnitIndex] floatValue];
 
-//    NSLog(@"dataArray = %@",[data objectForKey:firstUnitLabel]);
-//    NSLog(@"first = %f, second = %f", firstQuantityInDigit, secondQuantityInDigit);
-    
     float result = secondQuantityInDigit * firstQuantityInDigit;
     
     NSString *value = [NSString stringWithFormat:@"%.4f", result];
@@ -331,43 +333,41 @@ NSMutableDictionary *data;
     } else {
         self.convertedQuantityLabel.text = value;
     }
-    
-    NSString *secondQuantityInString = [NSString stringWithFormat:@"%.4f", secondQuantityInDigit];
-    
-    if ([secondQuantityInString hasSuffix:@".0000"]) {
-        secondQuantityInString = [NSString stringWithFormat:@"%.0f", secondQuantityInDigit];
+    NSString *secondQuantityInString;
+    if (secondQuantityInDigit < 0.001) {
+        secondQuantityInString = [NSString stringWithFormat:@"%.4f", secondQuantityInDigit];
+    } else if (secondQuantityInDigit < 0.01) {
+        secondQuantityInString = [NSString stringWithFormat:@"%.3f", secondQuantityInDigit];
+    } else {
+        secondQuantityInString = [NSString stringWithFormat:@"%.2f", secondQuantityInDigit];
     }
     
     self.unitFormulaLabel.text = [NSString stringWithFormat:@"1 %@ = %@ %@",  firstUnitLabel, secondQuantityInString, secondUnitLabel];
 }
 
-
-
-
 - (void)handleScrollingEnd:(UIScrollView *)scrollView
 {
     
     if (scrollView == self.quantityScrollView) {
-   //     NSLog(@"quantity at %f, %f", scrollView.contentOffset.x, scrollView.contentOffset.y);
         float x = floorf((scrollView.contentOffset.x + 25.0) / 50.0f) * 50.0f;
         NSLog(@"quantity new = %f", x);
         [scrollView setContentOffset:CGPointMake(x, scrollView.contentOffset.y) animated:YES];
         quantityInputOffset = x;
         
-        [self textUnitFormulaLabel:quantityInputOffset firstUnitOffset:firstUnitOffset secondUnitOffset:secondUnitOffset];
+        [self setUnitFormulaLabelFromQuantityOffset:quantityInputOffset firstUnitOffset:firstUnitOffset secondUnitOffset:secondUnitOffset];
     }
     else if (scrollView == self.menuFirstUnitScrollView)
     {
         firstUnitOffset = [self unitMenuContentOffset:scrollView];
         
-        [self textUnitFormulaLabel:quantityInputOffset firstUnitOffset:firstUnitOffset secondUnitOffset:secondUnitOffset];
+        [self setUnitFormulaLabelFromQuantityOffset:quantityInputOffset firstUnitOffset:firstUnitOffset secondUnitOffset:secondUnitOffset];
         
     }
     else if (scrollView == self.menuSecondUnitScrollView)
     {
         secondUnitOffset = [self unitMenuContentOffset:scrollView];
         
-        [self textUnitFormulaLabel:quantityInputOffset firstUnitOffset:firstUnitOffset secondUnitOffset:secondUnitOffset];
+        [self setUnitFormulaLabelFromQuantityOffset:quantityInputOffset firstUnitOffset:firstUnitOffset secondUnitOffset:secondUnitOffset];
     }
 }
 
@@ -393,10 +393,10 @@ NSMutableDictionary *data;
     [self initializeMenuFirstUnitScrollView]; 
     [self initializeMenuSecondUnitScrollView];
     
-    data = [self conversionDataTable];
+    conversionDictionary = [self buildConversionTable];
     
     quantityInputOffset = 0;
-    [self textUnitFormulaLabel:quantityInputOffset 
+    [self setUnitFormulaLabelFromQuantityOffset:quantityInputOffset 
                firstUnitOffset:0 
               secondUnitOffset:0 ];
     
@@ -422,7 +422,7 @@ NSMutableDictionary *data;
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return YES; // (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+    return NO; // (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
 @end
