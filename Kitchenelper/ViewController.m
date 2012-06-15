@@ -1,13 +1,21 @@
 //
 //  ViewController.m
-//  Kitchenelper
+//  Kitchen Helper
 //
 //  Created by Kate A. on 5/28/12.
 //  Copyright (c) 2012 Kedsuda Apichonbancha. All rights reserved.
 //
 
 #import "ViewController.h"
-
+#define MILLILITER @"Milliliter"
+#define TEASPOON @"Teaspoon"
+#define TABLESPOON @"Tablespoon"
+#define FLUID_OUNCE @"Fluid Ounce"
+#define CUP @"Cup"
+#define PINT @"Pint"
+#define QUART @"Quart"
+#define LITER @"Liter"
+#define GALLON @"Gallon"
 
 @interface ViewController ()
 - (NSString *)quantityLabel:(int)index;
@@ -39,18 +47,10 @@ NSMutableDictionary *data;
 - (NSMutableArray *)creatUnitArray
 {
     
-    NSMutableArray *array = [[NSMutableArray alloc] init];
-    [array addObject:@"Milliliter"];
-    [array addObject:@"Teaspoon"];
-    [array addObject:@"Tablespoon"];
-    [array addObject:@"Fluid Ounce"];
-    [array addObject:@"Cup"];
-    [array addObject:@"Pint"];
-    [array addObject:@"Quart"];
-    [array addObject:@"Liter"];
-    [array addObject:@"Gallon"];
+    NSMutableArray *array = [NSMutableArray arrayWithObjects:MILLILITER, TEASPOON, TABLESPOON,
+                              FLUID_OUNCE, CUP, PINT, QUART, LITER, GALLON, nil];
     
-    self.unitButtonArray = [[NSMutableArray alloc] init];
+    self.unitButtonArray = [NSMutableArray arrayWithCapacity:array.count];
     
     for (int i = 0 ; i < array.count; i++) 
     {
@@ -85,44 +85,18 @@ NSMutableDictionary *data;
     NSArray *literArray = [NSArray arrayWithObjects:@"1000", @"202.88414", @"67.628045", @"33.814023", @"4.2267528", @"2.1133764", @"1.0566882", @"1", @"0.26417205", nil];
     NSArray *gallonArray = [NSArray arrayWithObjects:@"3785.41178", @"768", @"256", @"128", @"16", @"8", @"4", @"3.7854118", @"1", nil];
     
-    [dataTable setObject:mlArray forKey:@"Milliliter"];
-    [dataTable setObject:tspArray forKey:@"Teaspoon"];
-    [dataTable setObject:tbspArray forKey:@"Tablespoon"];
-    [dataTable setObject:ounceArray forKey:@"Fluid Ounce"];
-    [dataTable setObject:cupArray forKey:@"Cup"];
-    [dataTable setObject:pintArray forKey:@"Pint"];
-    [dataTable setObject:quartArray forKey:@"Quart"];
-    [dataTable setObject:literArray forKey:@"Liter"];
-    [dataTable setObject:gallonArray forKey:@"Gallon"];
+    [dataTable setObject:mlArray forKey:MILLILITER];
+    [dataTable setObject:tspArray forKey:TEASPOON];
+    [dataTable setObject:tbspArray forKey:TABLESPOON];
+    [dataTable setObject:ounceArray forKey:FLUID_OUNCE];
+    [dataTable setObject:cupArray forKey:CUP];
+    [dataTable setObject:pintArray forKey:PINT];
+    [dataTable setObject:quartArray forKey:QUART];
+    [dataTable setObject:literArray forKey:LITER];
+    [dataTable setObject:gallonArray forKey:GALLON];
     
     return dataTable;
 }
-
-
-
-/*
- - (NSMutableArray *)createUnitButtonArray {
- 
- self.unitButtonArray = [[NSMutableArray alloc] init];
- 
- for (int i = 0 ; i < self.unitButtonArray.count; i++) 
- {
- UIButton *btn = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
- [btn setFrame:CGRectMake(0.0f, 0.0f, kButtonWidth, kButtonHeight)];
- 
- NSString *fileName = [NSString stringWithFormat:@"%d_32.png", i+1];
- UIImage *image = [UIImage imageNamed:fileName];
- [btn setImage:image forState:UIControlStateNormal];
- btn.userInteractionEnabled = NO;
- [btn addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
- 
- [unitButtonArray addObject:btn];
- 
- }
- 
- return unitButtonArray;
- }
- */
 
 - (NSMutableArray *)createQuantityButtonArray {
     
@@ -139,9 +113,6 @@ NSMutableDictionary *data;
         [btn setTitleColor:[UIColor colorWithRed:68.0/255.0 green:152.0/255.0 blue:180.0/255.0 alpha:1.0] forState:UIControlStateNormal];
         [btn.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:18.0]];
         btn.userInteractionEnabled = NO;
-        [btn addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        
-        
         
         [quantityButtonArray addObject:btn];
     }
@@ -149,15 +120,10 @@ NSMutableDictionary *data;
 }
 
 
-- (void)buttonPressed:(id)sender {
-    
-}
-
 - (void)initializeQuantityScrollView {
     
     [quantityScrollView setScrollEnabled:YES];
     [quantityScrollView setContentSize:CGSizeMake( ((kTotalQuantityButtons - 1) * kButtonWidth) + kScrollWidth, kScrollHeight)];
-//    [quantityScrollView setBackgroundColor:[UIColor grayColor]]
     
     quantityScrollView.showsVerticalScrollIndicator = FALSE;
     quantityScrollView.showsHorizontalScrollIndicator = FALSE;
@@ -187,9 +153,6 @@ NSMutableDictionary *data;
 {
     [scrollView setScrollEnabled:YES];
     
-    //  [scrollView setContentSize:CGSizeMake(((unitButtonArray.count - 1) * (2 * kButtonWidth) + kScrollWidth), kScrollHeight)];
-    
-    //    [scrollView setBackgroundColor:[UIColor orangeColor]];
     scrollView.showsHorizontalScrollIndicator = FALSE;
     scrollView.showsVerticalScrollIndicator = FALSE;
     scrollView.bounces = YES;
@@ -197,7 +160,6 @@ NSMutableDictionary *data;
     scrollView.delegate = self;
     
     
-    //[self createUnitButtonArray];
     [self creatUnitArray];
     
     float totalButtonWidth = 0.0; //(scrollView.frame.size.width / 20);
@@ -231,8 +193,6 @@ NSMutableDictionary *data;
     [self createUnitScrollView:menuFirstUnitScrollView];
     
 }
-
-
 
 - (void)initializeMenuSecondUnitScrollView 
 {
@@ -318,31 +278,31 @@ NSMutableDictionary *data;
     switch ((int)offset) 
     {
         case 0:
-            label = @"Milliliter";
+            label = MILLILITER;
             break;
         case 100:
-            label = @"Teaspoon";
+            label = TEASPOON;
             break;
         case 200:
-            label = @"Tablespoon";
+            label = TABLESPOON;
             break;
         case 300:
-            label = @"Fluid Ounce";
+            label = FLUID_OUNCE;
             break;
         case 400:
-            label = @"Cup";
+            label = CUP;
             break;
         case 500:
-            label = @"Pint";
+            label = PINT;
             break;
         case 600:
-            label = @"Quart";
+            label = QUART;
             break;
         case 700:
-            label = @"Liter";
+            label = LITER;
             break;
         case 800:
-            label = @"Gallon";
+            label = GALLON;
             break;
     }
     return label;
