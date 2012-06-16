@@ -1,6 +1,6 @@
 //
 //  ViewController.h
-//  Kitchenelper
+//  KitchenHelper
 //
 //  Created by Kate A. on 5/28/12.
 //  Copyright (c) 2012 Kedsuda Apichonbancha. All rights reserved.
@@ -25,4 +25,7 @@
 @property (nonatomic, retain) NSMutableArray *unitButtonArray;
 @property (nonatomic, retain) NSMutableArray *quantityButtonArray;
 
+@property (nonatomic, retain) NSString *backgroundString;
+
+- (void)setViewBackground:(NSString *)imageFileName;
 @end

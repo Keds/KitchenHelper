@@ -41,6 +41,7 @@
 @synthesize firstUnitOffset;
 @synthesize secondUnitOffset;
 @synthesize conversionDictionary;
+@synthesize backgroundString=_backgroundString;
 
 
 const CGFloat kButtonWidth = 50.0;
@@ -48,6 +49,7 @@ const CGFloat kButtonHeight = 50.0;
 const CGFloat kScrollWidth = 300.0;
 const CGFloat kScrollHeight = 50.0;
 const NSInteger kTotalQuantityButtons = 61;
+
 
 - (NSMutableArray *)creatUnitArray
 {
@@ -382,10 +384,24 @@ const NSInteger kTotalQuantityButtons = 61;
     [self handleScrollingEnd:scrollView];
 }
 
+- (void)setBackgroundString:(NSString *)imageFileName
+{
+    _backgroundString = imageFileName;
+    [self setViewBackground:imageFileName];
+}
+
+- (void)setViewBackground:(NSString *)imageFileName
+{
+    
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:imageFileName]]];
+}
 
 - (void)viewDidLoad
 {
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"Background-Wood.jpg"]]];
+    if (self.backgroundString == nil) {
+        self.backgroundString = @"Background-Wood.jpg";
+    }
+//    [self setViewBackground:self.backgroundString];
     
     [self initializeQuantityScrollView];
     [self initializeMenuFirstUnitScrollView]; 
@@ -397,12 +413,9 @@ const NSInteger kTotalQuantityButtons = 61;
     [self setUnitFormulaLabelFromQuantityOffset:quantityInputOffset 
                firstUnitOffset:0 
               secondUnitOffset:0 ];
-    
-    
         
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-
     
 }
 
