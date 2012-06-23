@@ -16,15 +16,10 @@
 
 @implementation InfoViewController
 
-@synthesize backgroundString;
+@synthesize backgroundString = _backgroundString;
 
 
 
-- (void)setViewBackground:(NSString *)imageFileName
-{
-    
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:imageFileName]]];
-} 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -41,7 +36,7 @@
 	// Do any additional setup after loading the view.
     
     
-    [self setViewBackground:@"Background-Wood.jpg"];
+  //  [self setViewBackground:@"Background-Wood.jpg"];
 
 }
 
@@ -56,18 +51,28 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+#pragma added_Methods
+
+
+- (void)setViewBackground:(NSString *)imageFileName
+{
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:imageFileName]]];
+} 
+
+
 - (IBAction)firstBackgroundButton:(id)sender 
 {
-    self.backgroundString = @"Background-Wood.jpg";
-//    ViewController.backgroundString = self.backgroundString;
+    [self setBackgroundString:@"Background-Wood.jpg"];
     [self setViewBackground:self.backgroundString];
 }
 
+
 - (IBAction)secondBackgroundButton:(id)sender 
 {
-    self.backgroundString = @"Background_Wood2.jpg"; 
+    [self setBackgroundString:@"Background_Wood2.jpg"]; 
     [self setViewBackground:self.backgroundString];
 }
+
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {

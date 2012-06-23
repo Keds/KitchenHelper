@@ -25,6 +25,7 @@
 		3E6C8D6F1575763500985E60 /* 8_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E6C8D6E1575763500985E60 /* 8_32.png */; };
 		3EBBB4EE158BECF20047A97E /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EBBB4ED158BECF20047A97E /* InfoViewController.m */; };
 		3EBBB4F1158BF3540047A97E /* Background_Wood2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3EBBB4F0158BF3540047A97E /* Background_Wood2.jpg */; };
+		3EBBB501159139B90047A97E /* ButtonArrayScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EBBB4FF15912BDF0047A97E /* ButtonArrayScrollView.m */; };
 		3EE21455158A80E00076DD87 /* flowerFrame.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3EE21454158A80E00076DD87 /* flowerFrame.jpg */; };
 		3EE21460158A8A8F0076DD87 /* Frame1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 3EE2145F158A8A8F0076DD87 /* Frame1.jpeg */; };
 		3EE21464158A8E470076DD87 /* Background-Wood.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3EE21463158A8E470076DD87 /* Background-Wood.jpg */; };
@@ -56,6 +57,8 @@
 		3EBBB4EC158BECF20047A97E /* InfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoViewController.h; sourceTree = "<group>"; };
 		3EBBB4ED158BECF20047A97E /* InfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoViewController.m; sourceTree = "<group>"; };
 		3EBBB4F0158BF3540047A97E /* Background_Wood2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Background_Wood2.jpg; sourceTree = "<group>"; };
+		3EBBB4FE15912BDF0047A97E /* ButtonArrayScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; name = ButtonArrayScrollView.h; path = ../ButtonArrayScrollView.h; sourceTree = "<group>"; };
+		3EBBB4FF15912BDF0047A97E /* ButtonArrayScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ButtonArrayScrollView.m; path = ../ButtonArrayScrollView.m; sourceTree = "<group>"; };
 		3EE21454158A80E00076DD87 /* flowerFrame.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = flowerFrame.jpg; sourceTree = "<group>"; };
 		3EE2145F158A8A8F0076DD87 /* Frame1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Frame1.jpeg; sourceTree = "<group>"; };
 		3EE21463158A8E470076DD87 /* Background-Wood.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Background-Wood.jpg"; sourceTree = "<group>"; };
@@ -110,6 +113,8 @@
 				3E6C8D4215741D0300985E60 /* AppDelegate.h */,
 				3E6C8D4315741D0300985E60 /* AppDelegate.m */,
 				3E6C8D4515741D0300985E60 /* MainStoryboard.storyboard */,
+				3EBBB4FE15912BDF0047A97E /* ButtonArrayScrollView.h */,
+				3EBBB4FF15912BDF0047A97E /* ButtonArrayScrollView.m */,
 				3E6C8D4815741D0300985E60 /* ViewController.h */,
 				3E6C8D4915741D0300985E60 /* ViewController.m */,
 				3EBBB4EC158BECF20047A97E /* InfoViewController.h */,
@@ -220,6 +225,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EBBB501159139B90047A97E /* ButtonArrayScrollView.m in Sources */,
 				3E6C8D4015741D0300985E60 /* main.m in Sources */,
 				3E6C8D4415741D0300985E60 /* AppDelegate.m in Sources */,
 				3E6C8D4A15741D0300985E60 /* ViewController.m in Sources */,

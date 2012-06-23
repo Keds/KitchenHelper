@@ -7,17 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ButtonArrayScrollView.h"
 
 @interface ViewController : UIViewController <UIScrollViewDelegate>{
     
 
 }
 
-@property (weak, nonatomic) IBOutlet UIScrollView *quantityScrollView;
+@property (weak, nonatomic) IBOutlet ButtonArrayScrollView *quantityScrollView;
 
-@property (weak, nonatomic) IBOutlet UIScrollView *menuFirstUnitScrollView;
+@property (weak, nonatomic) IBOutlet ButtonArrayScrollView *menuFirstUnitScrollView;
 
-@property (nonatomic, retain) IBOutlet UIScrollView *menuSecondUnitScrollView;
+@property (nonatomic, retain) IBOutlet ButtonArrayScrollView *menuSecondUnitScrollView;
 
 @property (weak, nonatomic) IBOutlet UILabel *convertedQuantityLabel;
 @property (nonatomic, retain) IBOutlet UILabel *unitFormulaLabel;

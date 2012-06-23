@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "Unit.h"
+#import "ButtonArrayScrollView.h"
 
 @interface ViewController ()
 
@@ -16,58 +17,24 @@
 @property (nonatomic, assign) float secondUnitOffset;
 @property (nonatomic, strong) NSMutableDictionary *conversionDictionary;
 
-- (NSString *)quantityLabel:(int)index;
-- (UIColor *)titleColor;
+
 @end
 
 @implementation ViewController
 
-@synthesize quantityScrollView;
-@synthesize menuFirstUnitScrollView;
-@synthesize menuSecondUnitScrollView;
-@synthesize convertedQuantityLabel;
-@synthesize unitFormulaLabel;
-@synthesize unitButtonArray;
-@synthesize quantityButtonArray;
-@synthesize quantityInputOffset;
-@synthesize firstUnitOffset;
-@synthesize secondUnitOffset;
-@synthesize conversionDictionary;
-@synthesize backgroundString=_backgroundString;
+@synthesize quantityScrollView = _quantityScrollView;
+@synthesize menuFirstUnitScrollView = _menuFirstUnitScrollView;
+@synthesize menuSecondUnitScrollView = _menuSecondUnitScrollView;
+@synthesize convertedQuantityLabel = _convertedQuantityLabel;
+@synthesize unitFormulaLabel = _unitFormulaLabel;
+@synthesize unitButtonArray = _unitButtonArray;
+@synthesize quantityButtonArray = _quantityButtonArray;
+@synthesize quantityInputOffset = _quantityInputOffset;
+@synthesize firstUnitOffset = _firstUnitOffset;
+@synthesize secondUnitOffset = _secondUnitOffset;
+@synthesize conversionDictionary = _conversionDictionary;
+@synthesize backgroundString = _backgroundString;
 
-
-const CGFloat kButtonWidth = 50.0;
-const CGFloat kButtonHeight = 50.0;
-const CGFloat kScrollWidth = 300.0;
-const CGFloat kScrollHeight = 50.0;
-const NSInteger kTotalQuantityButtons = 61;
-
-
-- (NSMutableArray *)creatUnitArray
-{
-    
-    NSMutableArray *array = [NSMutableArray arrayWithObjects:MILLILITER, TEASPOON, TABLESPOON,
-                              FLUID_OUNCE, CUP, PINT, QUART, LITER, GALLON, nil];
-    
-    self.unitButtonArray = [NSMutableArray arrayWithCapacity:array.count];
-    
-    for (int i = 0 ; i < array.count; i++) 
-    {
-        UIButton *btn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        
-        [btn setFrame:CGRectMake(0.0f, 0.0f, 2 * kButtonWidth, kButtonHeight)];
-      
-        NSString *btnTitle = [NSString stringWithFormat:@"%@",[array objectAtIndex:i]];
-        
-        [btn setTitle:btnTitle forState:UIControlStateNormal];
-        btn.userInteractionEnabled = NO;
-        [btn addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        
-        [unitButtonArray addObject:btn];
-        
-    }
-    return unitButtonArray;
-}
 
 
 - (NSMutableDictionary *)buildConversionTable
@@ -97,139 +64,32 @@ const NSInteger kTotalQuantityButtons = 61;
     return conversionTable;
 }
 
-- (NSMutableArray *)createQuantityButtonArray {
-    
-    self.quantityButtonArray = [[NSMutableArray alloc] initWithCapacity: kTotalQuantityButtons];
-    
-    for (int i = 0; i < kTotalQuantityButtons; i++) 
-    {
-        UIButton *btn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        
-        
-        [btn setFrame:CGRectMake(0.0f, 0.0f, kButtonWidth, kButtonHeight)];
-        
-        [btn setTitle:[self quantityLabel:i] forState:UIControlStateNormal];
-        [btn setTitleColor:[self titleColor] forState:UIControlStateNormal];
-        [btn.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:18.0]];
-        btn.userInteractionEnabled = NO;
-        
-        [quantityButtonArray addObject:btn];
-    }
-    return quantityButtonArray;
-}
-
-- (UIColor *)titleColor {
-    return [UIColor colorWithRed:68.0/255.0 green:152.0/255.0 blue:180.0/255.0 alpha:1.0];
-}
 
 - (void)initializeQuantityScrollView {
     
-    [quantityScrollView setScrollEnabled:YES];
-    [quantityScrollView setContentSize:CGSizeMake( ((kTotalQuantityButtons - 1) * kButtonWidth) + kScrollWidth, kScrollHeight)];
+
+    [self.quantityScrollView buildQuantityScrollViewWithButtonWidth:kButtonWidth buttonHeight:kButtonHeight totalButtons:kTotalQuantityButtons];
     
-    quantityScrollView.showsVerticalScrollIndicator = FALSE;
-    quantityScrollView.showsHorizontalScrollIndicator = FALSE;
-    quantityScrollView.bounces = YES;
-    
-    quantityScrollView.delegate = self;
-    
-    [self createQuantityButtonArray];
-    
-    float totalButtonWidth = 0;
-    
-    for (int i = 0; i < kTotalQuantityButtons; i++) 
-    {
-        UIButton *btn = [quantityButtonArray objectAtIndex:i];
-        
-        CGRect btnRect = btn.frame;
-        btnRect.origin.x = totalButtonWidth;
-        [btn setFrame:btnRect];
-        
-        [quantityScrollView addSubview:btn];
-        
-        totalButtonWidth += btn.frame.size.width;
-    }
+    self.quantityScrollView.delegate = self;
 }
 
-- (void)createUnitScrollView:(UIScrollView *)scrollView
-{
-    [scrollView setScrollEnabled:YES];
-    
-    scrollView.showsHorizontalScrollIndicator = FALSE;
-    scrollView.showsVerticalScrollIndicator = FALSE;
-    scrollView.bounces = YES;
-    
-    scrollView.delegate = self;
-    
-    
-    [self creatUnitArray];
-    
-    float totalButtonWidth = 0.0; //(scrollView.frame.size.width / 20);
-    
-    for (int i = 0; i < [unitButtonArray count]; i++) 
-    {
-        UIButton *btn = [unitButtonArray objectAtIndex:i];
-        
-        // Move the buttons position in the x-demension (horizontal).
-        CGRect btnRect = btn.frame;
-        btnRect.origin.x = totalButtonWidth;
-        [btn setFrame:btnRect];
-        
-        [btn setTitleColor:[self titleColor] forState:UIControlStateNormal];
-        [btn.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:15.0]];
-
-        
-        // Add the button to the scrollview
-        [scrollView addSubview:btn];
-        
-        // Add the width of the button to the total width.
-        totalButtonWidth += btn.frame.size.width;
-        
-    }
-    
-    [scrollView setContentSize:CGSizeMake((totalButtonWidth - (kButtonWidth * 2) + kScrollWidth), kScrollHeight)];
-}
 
 - (void)initializeMenuFirstUnitScrollView
 {
-    [self createUnitScrollView:menuFirstUnitScrollView];
+   // [self createUnitScrollView:menuFirstUnitScrollView];
+    [self.menuFirstUnitScrollView buildUnitScrollViewWithButtonWidth:(kButtonWidth*2) buttonHeight:kButtonHeight];
+    self.menuFirstUnitScrollView.delegate = self;
 }
 
 
 - (void)initializeMenuSecondUnitScrollView 
 {
-    [self createUnitScrollView:menuSecondUnitScrollView];
+   // [self createUnitScrollView:menuSecondUnitScrollView];
+    [self.menuSecondUnitScrollView buildUnitScrollViewWithButtonWidth:(kButtonWidth*2) buttonHeight:kButtonHeight];
+    self.menuSecondUnitScrollView.delegate = self;
 }
 
 
-- (NSString *)quantityLabel:(int)index
-{
-    /* 0 = 0, 1 = 1/4, 2 = 1/3, 3 = 1/2, 4 = 2/3, 5 = 3/4  */
-    /* index % 6 */
-    /* 1, 1.5 2 2.5 ... */
-    NSString *result = [NSString stringWithFormat:@"%d", index/6];
-    NSString *suffix;
-    switch (index % 6) {
-        case 0:
-            suffix = @""; break; // 0
-        case 1:
-            suffix = @" \u00BC"; break; // 1/4
-        case 2:
-            suffix = @" \u2153"; break; // 1/3
-        case 3:
-            suffix = @" \u00BD"; break; // 1/2
-        case 4:
-            suffix = @" \u2154"; break; // 2/3
-        case 5:
-            suffix = @" \u00BE"; break; // 3/4
-    }
-    
-    if (index > 0 && index < 6) 
-    {
-        result = @"";
-    }
-    return [result stringByAppendingFormat:suffix];
-}
 
 - (float)convertInputNumber:(float)x
 {
@@ -343,6 +203,27 @@ const NSInteger kTotalQuantityButtons = 61;
     target.amount = [NSNumber numberWithFloat:[target.amount floatValue] * firstQuantityInDigit];
     
     self.convertedQuantityLabel.text = target.formattedAmount;
+//
+//    NSInteger secondUnitIndex = secondUnitContentOffset/(2 * kButtonWidth);
+//    float secondQuantityInDigit = [[[self.conversionDictionary objectForKey:firstUnitLabel] objectAtIndex:secondUnitIndex] floatValue];
+//
+//    float result = secondQuantityInDigit * firstQuantityInDigit;
+//    
+//    NSString *value = [NSString stringWithFormat:@"%.4f", result];
+//    
+//    if ([value hasSuffix:@".0000"]) {
+//        self.convertedQuantityLabel.text = [NSString stringWithFormat:@"%.0f", result];
+//    } else {
+//        self.convertedQuantityLabel.text = value;
+//    }
+//    NSString *secondQuantityInString;
+//    secondQuantityInString = [NSString stringWithFormat:@"%.4f", secondQuantityInDigit];
+//    if ([secondQuantityInString hasSuffix:@".0000"]) {
+//        secondQuantityInString = [NSString stringWithFormat:@"%.0f", secondQuantityInString];
+//    }
+//    
+//    NSString *plural = (secondQuantityInDigit == 0 || secondQuantityInDigit == 1) ? @"" : @"s";
+//    self.unitFormulaLabel.text = [NSString stringWithFormat:@"1 %@ = %@ %@%@",  firstUnitLabel, secondQuantityInString, secondUnitLabel, plural];
 }
 
 - (void)handleScrollingEnd:(UIScrollView *)scrollView
@@ -352,22 +233,22 @@ const NSInteger kTotalQuantityButtons = 61;
         float x = floorf((scrollView.contentOffset.x + 25.0) / 50.0f) * 50.0f;
         NSLog(@"quantity new = %f", x);
         [scrollView setContentOffset:CGPointMake(x, scrollView.contentOffset.y) animated:YES];
-        quantityInputOffset = x;
+        self.quantityInputOffset = x;
         
-        [self setUnitFormulaLabelFromQuantityOffset:quantityInputOffset firstUnitOffset:firstUnitOffset secondUnitOffset:secondUnitOffset];
+        [self setUnitFormulaLabelFromQuantityOffset:self.quantityInputOffset firstUnitOffset:self.firstUnitOffset secondUnitOffset:self.secondUnitOffset];
     }
     else if (scrollView == self.menuFirstUnitScrollView)
     {
-        firstUnitOffset = [self unitMenuContentOffset:scrollView];
+        self.firstUnitOffset = [self unitMenuContentOffset:scrollView];
         
-        [self setUnitFormulaLabelFromQuantityOffset:quantityInputOffset firstUnitOffset:firstUnitOffset secondUnitOffset:secondUnitOffset];
+        [self setUnitFormulaLabelFromQuantityOffset:self.quantityInputOffset firstUnitOffset:self.firstUnitOffset secondUnitOffset:self.secondUnitOffset];
         
     }
     else if (scrollView == self.menuSecondUnitScrollView)
     {
-        secondUnitOffset = [self unitMenuContentOffset:scrollView];
+        self.secondUnitOffset = [self unitMenuContentOffset:scrollView];
         
-        [self setUnitFormulaLabelFromQuantityOffset:quantityInputOffset firstUnitOffset:firstUnitOffset secondUnitOffset:secondUnitOffset];
+        [self setUnitFormulaLabelFromQuantityOffset:self.quantityInputOffset firstUnitOffset:self.firstUnitOffset secondUnitOffset:self.secondUnitOffset];
     }
 }
 
@@ -384,6 +265,7 @@ const NSInteger kTotalQuantityButtons = 61;
     [self handleScrollingEnd:scrollView];
 }
 
+
 - (void)setBackgroundString:(NSString *)imageFileName
 {
     _backgroundString = imageFileName;
@@ -396,26 +278,34 @@ const NSInteger kTotalQuantityButtons = 61;
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:imageFileName]]];
 }
 
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    [segue.destinationViewController setBackgroundString:self.backgroundString];
+    [segue.destinationViewController setViewBackground:self.backgroundString];
+}
+
+
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
+	// Do any additional setup after loading the view, typically from a nib.
+    
+    
     if (self.backgroundString == nil) {
         self.backgroundString = @"Background-Wood.jpg";
     }
-//    [self setViewBackground:self.backgroundString];
     
     [self initializeQuantityScrollView];
     [self initializeMenuFirstUnitScrollView]; 
     [self initializeMenuSecondUnitScrollView];
     
-    conversionDictionary = [self buildConversionTable];
+    self.conversionDictionary = [self buildConversionTable];
     
-    quantityInputOffset = 0;
-    [self setUnitFormulaLabelFromQuantityOffset:quantityInputOffset 
+    self.quantityInputOffset = 0;
+    [self setUnitFormulaLabelFromQuantityOffset:self.quantityInputOffset 
                firstUnitOffset:0 
-              secondUnitOffset:0 ];
-        
-    [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+                               secondUnitOffset:0 ];
     
 }
 
