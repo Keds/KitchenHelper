@@ -7,15 +7,7 @@
 //
 
 #import "ViewController.h"
-#define MILLILITER @"Milliliter"
-#define TEASPOON @"Teaspoon"
-#define TABLESPOON @"Tablespoon"
-#define FLUID_OUNCE @"Fluid Ounce"
-#define CUP @"Cup"
-#define PINT @"Pint"
-#define QUART @"Quart"
-#define LITER @"Liter"
-#define GALLON @"Gallon"
+#import "Unit.h"
 
 @interface ViewController ()
 
@@ -323,26 +315,34 @@ const NSInteger kTotalQuantityButtons = 61;
     NSString *firstUnitLabel = [self unitLabel:firstUnitContentOffset];
     NSString *secondUnitLabel = [self unitLabel:secondUnitContentOffset];
     
-    NSInteger secondUnitIndex = secondUnitContentOffset/(2 * kButtonWidth);
-    float secondQuantityInDigit = [[[conversionDictionary objectForKey:firstUnitLabel] objectAtIndex:secondUnitIndex] floatValue];
-
-    float result = secondQuantityInDigit * firstQuantityInDigit;
+//    NSInteger secondUnitIndex = secondUnitContentOffset/(2 * kButtonWidth);
+//    float secondQuantityInDigit = [[[conversionDictionary objectForKey:firstUnitLabel] objectAtIndex:secondUnitIndex] floatValue];
+//
+//    float result = secondQuantityInDigit * firstQuantityInDigit;
+//    
+//    NSString *value = [NSString stringWithFormat:@"%.4f", result];
+//    
+//    if ([value hasSuffix:@".0000"]) {
+//        self.convertedQuantityLabel.text = [NSString stringWithFormat:@"%.0f", result];
+//    } else {
+//        self.convertedQuantityLabel.text = value;
+//    }
+//    NSString *secondQuantityInString;
+//    secondQuantityInString = [NSString stringWithFormat:@"%.4f", secondQuantityInDigit];
+//    if ([secondQuantityInString hasSuffix:@".0000"]) {
+//        secondQuantityInString = [NSString stringWithFormat:@"%.0f", secondQuantityInString];
+//    }
+//    
+//    NSString *plural = (secondQuantityInDigit == 0 || secondQuantityInDigit == 1) ? @"" : @"s";
+//    self.unitFormulaLabel.text = [NSString stringWithFormat:@"1 %@ = %@ %@%@",  firstUnitLabel, secondQuantityInString, secondUnitLabel, plural];
     
-    NSString *value = [NSString stringWithFormat:@"%.4f", result];
+    Unit *source = [Unit unitFrom:firstUnitLabel amount:1.0];
+    float targetAmount = [source amountIn:secondUnitLabel];
+    Unit *target = [Unit unitFrom:secondUnitLabel amount:targetAmount];
+    self.unitFormulaLabel.text = [NSString stringWithFormat:@"%@ = %@", source, target];
+    target.amount = [NSNumber numberWithFloat:[target.amount floatValue] * firstQuantityInDigit];
     
-    if ([value hasSuffix:@".0000"]) {
-        self.convertedQuantityLabel.text = [NSString stringWithFormat:@"%.0f", result];
-    } else {
-        self.convertedQuantityLabel.text = value;
-    }
-    NSString *secondQuantityInString;
-    secondQuantityInString = [NSString stringWithFormat:@"%.4f", secondQuantityInDigit];
-    if ([secondQuantityInString hasSuffix:@".0000"]) {
-        secondQuantityInString = [NSString stringWithFormat:@"%.0f", secondQuantityInString];
-    }
-    
-    NSString *plural = (secondQuantityInDigit == 0 || secondQuantityInDigit == 1) ? @"" : @"s";
-    self.unitFormulaLabel.text = [NSString stringWithFormat:@"1 %@ = %@ %@%@",  firstUnitLabel, secondQuantityInString, secondUnitLabel, plural];
+    self.convertedQuantityLabel.text = target.formattedAmount;
 }
 
 - (void)handleScrollingEnd:(UIScrollView *)scrollView

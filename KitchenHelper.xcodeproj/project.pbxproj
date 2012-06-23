@@ -28,6 +28,7 @@
 		3EE21455158A80E00076DD87 /* flowerFrame.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3EE21454158A80E00076DD87 /* flowerFrame.jpg */; };
 		3EE21460158A8A8F0076DD87 /* Frame1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 3EE2145F158A8A8F0076DD87 /* Frame1.jpeg */; };
 		3EE21464158A8E470076DD87 /* Background-Wood.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3EE21463158A8E470076DD87 /* Background-Wood.jpg */; };
+		4253DE70159677DB003F0624 /* Unit.m in Sources */ = {isa = PBXBuildFile; fileRef = 4253DE6F159677DB003F0624 /* Unit.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,12 +53,14 @@
 		3E6C8D6A1575762600985E60 /* 6_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 6_32.png; sourceTree = "<group>"; };
 		3E6C8D6C1575762F00985E60 /* 7_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 7_32.png; sourceTree = "<group>"; };
 		3E6C8D6E1575763500985E60 /* 8_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 8_32.png; sourceTree = "<group>"; };
-		3EBBB4EC158BECF20047A97E /* InfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = InfoViewController.h; sourceTree = "<group>"; };
+		3EBBB4EC158BECF20047A97E /* InfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoViewController.h; sourceTree = "<group>"; };
 		3EBBB4ED158BECF20047A97E /* InfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoViewController.m; sourceTree = "<group>"; };
 		3EBBB4F0158BF3540047A97E /* Background_Wood2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Background_Wood2.jpg; sourceTree = "<group>"; };
 		3EE21454158A80E00076DD87 /* flowerFrame.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = flowerFrame.jpg; sourceTree = "<group>"; };
 		3EE2145F158A8A8F0076DD87 /* Frame1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Frame1.jpeg; sourceTree = "<group>"; };
 		3EE21463158A8E470076DD87 /* Background-Wood.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Background-Wood.jpg"; sourceTree = "<group>"; };
+		4253DE6E159677DB003F0624 /* Unit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Unit.h; sourceTree = "<group>"; };
+		4253DE6F159677DB003F0624 /* Unit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Unit.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +115,8 @@
 				3EBBB4EC158BECF20047A97E /* InfoViewController.h */,
 				3EBBB4ED158BECF20047A97E /* InfoViewController.m */,
 				3E6C8D3A15741D0300985E60 /* Supporting Files */,
+				4253DE6E159677DB003F0624 /* Unit.h */,
+				4253DE6F159677DB003F0624 /* Unit.m */,
 			);
 			name = KitchenHelper;
 			path = Kitchenelper;
@@ -219,6 +224,7 @@
 				3E6C8D4415741D0300985E60 /* AppDelegate.m in Sources */,
 				3E6C8D4A15741D0300985E60 /* ViewController.m in Sources */,
 				3EBBB4EE158BECF20047A97E /* InfoViewController.m in Sources */,
+				4253DE70159677DB003F0624 /* Unit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
