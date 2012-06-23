@@ -61,14 +61,14 @@ static NSDictionary *CONVERSION() {
 
 - (NSString *)description
 {
-    NSString *plural = [self isPlural] ? @"" : @"s";
+    NSString *plural = [self isPlural] ? @"s" : @"";
     return [NSString stringWithFormat:@"%@ %@%@",  [self formattedAmount], self.unit, plural];
 }
 
 - (BOOL)isPlural
 {
     float floatAmount = [self.amount floatValue];
-    return !floatAmount == 0 && !floatAmount == 1;
+    return floatAmount != 0 && floatAmount != 1;
 }
 
 @end

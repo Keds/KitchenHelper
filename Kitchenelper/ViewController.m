@@ -15,7 +15,7 @@
 @property (nonatomic, assign) float quantityInputOffset;
 @property (nonatomic, assign) float firstUnitOffset;
 @property (nonatomic, assign) float secondUnitOffset;
-@property (nonatomic, strong) NSMutableDictionary *conversionDictionary;
+//@property (nonatomic, strong) NSMutableDictionary *conversionDictionary;
 
 
 @end
@@ -32,37 +32,37 @@
 @synthesize quantityInputOffset = _quantityInputOffset;
 @synthesize firstUnitOffset = _firstUnitOffset;
 @synthesize secondUnitOffset = _secondUnitOffset;
-@synthesize conversionDictionary = _conversionDictionary;
+//@synthesize conversionDictionary = _conversionDictionary;
 @synthesize backgroundString = _backgroundString;
 
 
 
-- (NSMutableDictionary *)buildConversionTable
-{
-    NSMutableDictionary *conversionTable = [[NSMutableDictionary alloc] init];
-    
-    NSArray *mlArray = [NSArray arrayWithObjects:@"1", @"0.20", @"0.0676280454", @"0.0338140227", @"0.00425", @"0.002125", @"0.0010625", @"0.001", @"0.000265625", nil];
-    NSArray *tspArray = [NSArray arrayWithObjects:@"5", @"1", @"0.3333333333", @"0.16907", @"0.0208333333", @"0.00211", @"0.0052083333", @"0.0049289216", @"0.0013020833", nil];
-    NSArray *tbspArray = [NSArray arrayWithObjects:@"14.7867648", @"3", @"1", @"0.50", @"0.06", @"0.03", @"0.02", @"0.01", @"0.004", nil];
-    NSArray *ounceArray = [NSArray arrayWithObjects:@"29.57353", @"6", @"2", @"1", @"0.125", @"0.0625", @"0.03125", @"0.02957353", @"0.0078125", nil];
-    NSArray *cupArray = [NSArray arrayWithObjects:@"236.5882375", @"48", @"16", @"8", @"1", @"0.5", @"0.25", @"0.23658824", @"0.0625", nil];
-    NSArray *pintArray = [NSArray arrayWithObjects:@"473.176", @"96", @"32", @"16", @"2", @"1", @"0.5", @"0.47317647", @"0.125", nil];
-    NSArray *quartArray = [NSArray arrayWithObjects:@"946.3529", @"192", @"64", @"32", @"4", @"2", @"1", @"0.94635295", @"0.25", nil];
-    NSArray *literArray = [NSArray arrayWithObjects:@"1000", @"202.88414", @"67.628045", @"33.814023", @"4.2267528", @"2.1133764", @"1.0566882", @"1", @"0.26417205", nil];
-    NSArray *gallonArray = [NSArray arrayWithObjects:@"3785.41178", @"768", @"256", @"128", @"16", @"8", @"4", @"3.7854118", @"1", nil];
-    
-    [conversionTable setObject:mlArray forKey:MILLILITER];
-    [conversionTable setObject:tspArray forKey:TEASPOON];
-    [conversionTable setObject:tbspArray forKey:TABLESPOON];
-    [conversionTable setObject:ounceArray forKey:FLUID_OUNCE];
-    [conversionTable setObject:cupArray forKey:CUP];
-    [conversionTable setObject:pintArray forKey:PINT];
-    [conversionTable setObject:quartArray forKey:QUART];
-    [conversionTable setObject:literArray forKey:LITER];
-    [conversionTable setObject:gallonArray forKey:GALLON];
-    
-    return conversionTable;
-}
+//- (NSMutableDictionary *)buildConversionTable
+//{
+//    NSMutableDictionary *conversionTable = [[NSMutableDictionary alloc] init];
+//    
+//    NSArray *mlArray = [NSArray arrayWithObjects:@"1", @"0.20", @"0.0676280454", @"0.0338140227", @"0.00425", @"0.002125", @"0.0010625", @"0.001", @"0.000265625", nil];
+//    NSArray *tspArray = [NSArray arrayWithObjects:@"5", @"1", @"0.3333333333", @"0.16907", @"0.0208333333", @"0.00211", @"0.0052083333", @"0.0049289216", @"0.0013020833", nil];
+//    NSArray *tbspArray = [NSArray arrayWithObjects:@"14.7867648", @"3", @"1", @"0.50", @"0.06", @"0.03", @"0.02", @"0.01", @"0.004", nil];
+//    NSArray *ounceArray = [NSArray arrayWithObjects:@"29.57353", @"6", @"2", @"1", @"0.125", @"0.0625", @"0.03125", @"0.02957353", @"0.0078125", nil];
+//    NSArray *cupArray = [NSArray arrayWithObjects:@"236.5882375", @"48", @"16", @"8", @"1", @"0.5", @"0.25", @"0.23658824", @"0.0625", nil];
+//    NSArray *pintArray = [NSArray arrayWithObjects:@"473.176", @"96", @"32", @"16", @"2", @"1", @"0.5", @"0.47317647", @"0.125", nil];
+//    NSArray *quartArray = [NSArray arrayWithObjects:@"946.3529", @"192", @"64", @"32", @"4", @"2", @"1", @"0.94635295", @"0.25", nil];
+//    NSArray *literArray = [NSArray arrayWithObjects:@"1000", @"202.88414", @"67.628045", @"33.814023", @"4.2267528", @"2.1133764", @"1.0566882", @"1", @"0.26417205", nil];
+//    NSArray *gallonArray = [NSArray arrayWithObjects:@"3785.41178", @"768", @"256", @"128", @"16", @"8", @"4", @"3.7854118", @"1", nil];
+//    
+//    [conversionTable setObject:mlArray forKey:MILLILITER];
+//    [conversionTable setObject:tspArray forKey:TEASPOON];
+//    [conversionTable setObject:tbspArray forKey:TABLESPOON];
+//    [conversionTable setObject:ounceArray forKey:FLUID_OUNCE];
+//    [conversionTable setObject:cupArray forKey:CUP];
+//    [conversionTable setObject:pintArray forKey:PINT];
+//    [conversionTable setObject:quartArray forKey:QUART];
+//    [conversionTable setObject:literArray forKey:LITER];
+//    [conversionTable setObject:gallonArray forKey:GALLON];
+//    
+//    return conversionTable;
+//}
 
 
 - (void)initializeQuantityScrollView {
@@ -300,7 +300,7 @@
     [self initializeMenuFirstUnitScrollView]; 
     [self initializeMenuSecondUnitScrollView];
     
-    self.conversionDictionary = [self buildConversionTable];
+//    self.conversionDictionary = [self buildConversionTable];
     
     self.quantityInputOffset = 0;
     [self setUnitFormulaLabelFromQuantityOffset:self.quantityInputOffset 
