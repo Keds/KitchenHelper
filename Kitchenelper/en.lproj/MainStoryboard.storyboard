@@ -109,7 +109,7 @@
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" title="Kitchen Helper" id="xaA-XZ-68a">
-                        <barButtonItem key="rightBarButtonItem" title="Settings" id="sgg-V2-jWQ">
+                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="sgg-V2-jWQ">
                             <connections>
                                 <segue destination="Sqe-VX-lOn" kind="push" id="AyF-6A-U4U"/>
                             </connections>
