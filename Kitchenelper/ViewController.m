@@ -231,7 +231,6 @@
     
     if (scrollView == self.quantityScrollView) {
         float x = floorf((scrollView.contentOffset.x + 25.0) / 50.0f) * 50.0f;
-        NSLog(@"quantity new = %f", x);
         [scrollView setContentOffset:CGPointMake(x, scrollView.contentOffset.y) animated:YES];
         self.quantityInputOffset = x;
         
@@ -323,7 +322,8 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return NO; // interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
+    return interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown ||
+           interfaceOrientation == UIInterfaceOrientationPortrait;
 }
 
 @end
