@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "ButtonArrayScrollView.h"
+#import "InfoViewController.h"
 
-@interface ViewController : UIViewController <UIScrollViewDelegate>{
+@interface ViewController : UIViewController <UIScrollViewDelegate,InfoViewDelegate> {
     
 
 }

@@ -1,5 +1,5 @@
 //
-//  Info_ViewControllerViewController.h
+//  InfoViewController.h
 //  KitchenHelper
 //
 //  Created by Kate A. on 6/15/12.
@@ -8,10 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@interface InfoViewController : UIViewController
+@protocol InfoViewDelegate <NSObject>
 
-@property (nonatomic, retain) NSString *backgroundString;
-- (IBAction)firstBackgroundButton:(id)sender;
-- (IBAction)secondBackgroundButton:(id)sender;
+- (void)noifyBackgroundFileName:(NSString *)fileName;
 
 @end
+
+@interface InfoViewController : UIViewController
+
+@property (nonatomic, strong) NSString *backgroundString;
+@property (nonatomic, weak) id<InfoViewDelegate> delegate;
+@end
+

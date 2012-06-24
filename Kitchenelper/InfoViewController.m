@@ -11,15 +11,14 @@
 #import "InfoViewController.h"
 
 @interface InfoViewController ()
-
+- (IBAction)firstBackgroundButton:(id)sender;
+- (IBAction)secondBackgroundButton:(id)sender;
 @end
 
 @implementation InfoViewController
 
 @synthesize backgroundString = _backgroundString;
-
-
-
+@synthesize delegate = _delegate;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -56,30 +55,27 @@
 
 - (void)setViewBackground:(NSString *)imageFileName
 {
+    self.backgroundString = imageFileName;
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:imageFileName]]];
 } 
 
 
+- (void)setBackground:(NSString *)fileName
+{
+    [self setViewBackground:fileName];
+    [self.delegate noifyBackgroundFileName:fileName];
+}
+
 - (IBAction)firstBackgroundButton:(id)sender 
 {
-    [self setBackgroundString:@"Background-Wood.jpg"];
-    [self setViewBackground:self.backgroundString];
+    [self setBackground:@"Background-Wood.jpg"];
 }
 
 
 - (IBAction)secondBackgroundButton:(id)sender 
 {
-    [self setBackgroundString:@"Background_Wood2.jpg"]; 
-    [self setViewBackground:self.backgroundString];
+    [self setBackground:@"Background_Wood2.jpg"];
 }
-
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    ((ViewController *)segue.destinationViewController).backgroundString = self.backgroundString;
-//    [((ViewController *)segue.destinationViewController) setViewBackground:self.backgroundString];
-}
-
 
 @end
 
