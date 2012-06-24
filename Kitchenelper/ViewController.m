@@ -265,32 +265,32 @@
     [self handleScrollingEnd:scrollView];
 }
 
-
 - (void)setBackgroundString:(NSString *)imageFileName
 {
     _backgroundString = imageFileName;
     [self setViewBackground:imageFileName];
 }
 
+- (void)noifyBackgroundFileName:(NSString *)fileName
+{
+    self.backgroundString = fileName;
+}
+
 - (void)setViewBackground:(NSString *)imageFileName
 {
-    
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:imageFileName]]];
 }
 
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    [segue.destinationViewController setBackgroundString:self.backgroundString];
     [segue.destinationViewController setViewBackground:self.backgroundString];
+    ((InfoViewController *)segue.destinationViewController).delegate = self;
 }
-
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-    
+    // Do any additional setup after loading the view, typically from a nib.
     
     if (self.backgroundString == nil) {
         self.backgroundString = @"Background-Wood.jpg";
